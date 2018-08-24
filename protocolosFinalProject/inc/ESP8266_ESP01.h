@@ -14,14 +14,20 @@
 
 #define ESP01_RX_BUFF_SIZE         1024
 
-#define WIFI_SSID                  "INVITADOS-CADIEEL"     // Setear Red Wi-Fi
-#define WIFI_PASSWORD              "CORDOBA9504" // Setear password
+//#define WIFI_SSID                  "INVITADOS-CADIEEL"     // Setear Red Wi-Fi
+//#define WIFI_PASSWORD              "CORDOBA9504" // Setear password
+#define WIFI_SSID                  "Telecentro-c420"     // Setear Red Wi-Fi
+#define WIFI_PASSWORD              "QXFRUY6EWEVD" // Setear password
 
 #define THINGSPEAK_SERVER_URL      "api.thingspeak.com"
 #define THINGSPEAK_SERVER_PORT     80
 #define THINGSPEAK_WRITE_API_KEY   "920ND9HQO0PQ8CT8"
-#define THINGSPEAK_FIELD_NUMBER    2
+#define THINGSPEAK_FIELD_NUMBER    1
 
+typedef enum{ESP01_INIT,CONNECTION_ERROR,CONECT_TO_WIFI_AP,CONNECTED,NOT_CONNECTED,INIT_ERROR}esp01management_t;
+
+void fsmEsp01Init(uint8_t *actualState);
+void fsmEsp01Act(uint8_t *actualState);
 
 bool_t esp01Init( uartMap_t uartForEsp, uartMap_t uartForDebug, uint32_t baudRate );
 

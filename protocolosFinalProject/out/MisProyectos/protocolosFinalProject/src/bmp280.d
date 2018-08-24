@@ -1,5 +1,6 @@
-MisProyectos/protocolosFinalProject/out/MisProyectos/protocolosFinalProject/src/main.o: \
- MisProyectos/protocolosFinalProject/src/main.c \
+MisProyectos/protocolosFinalProject/out/MisProyectos/protocolosFinalProject/src/bmp280.o: \
+ MisProyectos/protocolosFinalProject/src/bmp280.c \
+ MisProyectos/protocolosFinalProject/inc/bmp280.h \
  libs/sapi/sapi_v0.5.1/inc/sapi.h \
  libs/sapi/sapi_v0.5.1/inc/sapi_datatypes.h \
  libs/vendor_libs/lpc_chip_43xx/inc/chip.h \
@@ -97,13 +98,4 @@ MisProyectos/protocolosFinalProject/out/MisProyectos/protocolosFinalProject/src/
  libs/sapi/sapi_v0.5.1/inc/sapi_magnetometer_hmc5883l.h \
  libs/sapi/sapi_v0.5.1/inc/sapi_magnetometer_qmc5883l.h \
  libs/sapi/sapi_v0.5.1/inc/sapi_imu_mpu9250.h \
- libs/elm-chan-FatFs/fatfs_ssp/inc/ff.h \
- libs/elm-chan-FatFs/fatfs_ssp/inc/integer.h \
- libs/elm-chan-FatFs/fatfs_ssp/inc/ffconf.h \
- MisProyectos/protocolosFinalProject/inc/ESP8266_ESP01.h \
- libs/sapi/sapi_v0.5.1/inc/sapi_i2c.h \
- MisProyectos/protocolosFinalProject/inc/ADC_hardwareProxy.h \
- libs/sapi/sapi_v0.5.1/inc/sapi_datatypes.h \
- libs/sapi/sapi_v0.5.1/inc/sapi_peripheral_map.h \
- MisProyectos/protocolosFinalProject/inc/ADC_proxyClient.h \
- libs/sapi/sapi_v0.5.1/inc/sapi_timer.h
+ libs/sapi/sapi_v0.5.1/inc/sapi_i2c.h

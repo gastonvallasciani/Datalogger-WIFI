@@ -56,7 +56,6 @@ DEBUG_PRINT_ENABLE
 /*==================[declaraciones de funciones internas]====================*/
 
 /*==================[declaraciones de funciones externas]====================*/
-
 // ESP01 Rx Buffer
 char espResponseBuffer[ ESP01_RX_BUFF_SIZE ];
 uint32_t espResponseBufferSize = ESP01_RX_BUFF_SIZE;
@@ -67,6 +66,57 @@ uartMap_t uartDebug = UART_USB;
 
 char tcpIpDataToSend[100];
 int64_t sensorValue = 0;
+
+static uint8_t connectionErrorCounter = 0, initErrorCounter = 0;
+
+void fsmEsp01Init(uint8_t *actualState){
+	*actualState = ESP01_INIT;
+}
+
+void fsmEsp01Act(uint8_t *actualState){
+	switch(*actualState){
+	case ESP01_INIT:
+		if( !esp01Init( UART_ESP01, UART_DEBUG, UARTS_BAUD_RATE ) ){
+			*actualState = INIT_ERROR; // Como dio falso (error) me quedo en un bucle infinito
+		     }
+		else{
+			*actualState = CONECT_TO_WIFI_AP;
+		}
+		break;
+	case CONECT_TO_WIFI_AP:
+		 if( !esp01ConnectToWifiAP( WIFI_SSID, WIFI_PASSWORD ) ){
+			 *actualState = CONNECTION_ERROR; // Como dio falso (error) me quedo en un bucle infinito
+		     }
+		 else{
+			 *actualState = CONNECTED;
+		 }
+		break;
+	case CONNECTED:
+	break;
+	case CONNECTION_ERROR:
+		connectionErrorCounter++;
+		if(connectionErrorCounter == 4){
+			*actualState = NOT_CONNECTED; // si no logra conectar en 4 intentos se considera que hay problemas con el modulo
+										  // ESP01 entonces se deja de intentar la conexion y se sigue con el programa
+		}
+		else{
+			*actualState = CONECT_TO_WIFI_AP;
+		}
+		break;
+	case NOT_CONNECTED:
+		break;
+	case INIT_ERROR:
+		initErrorCounter++;
+		if(initErrorCounter == 4){
+			*actualState = NOT_CONNECTED;// si no logra conectar en 4 intentos se considera que hay problemas con el modulo
+		}								 // ESP01 entones se deja de intentar la conexion y se sigue con el programa
+		else{
+			*actualState = ESP01_INIT;
+		}
+		break;
+
+	}
+}
 
 void esp01CleanRxBuffer( void ){
    espResponseBufferSize = ESP01_RX_BUFF_SIZE;
@@ -402,6 +452,8 @@ void stopProgramError( void ){
       sleepUntilNextInterrupt();
    }
 }
+
+
 
 
 
